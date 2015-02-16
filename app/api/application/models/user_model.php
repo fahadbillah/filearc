@@ -113,6 +113,12 @@ class User_model extends CI_Model {
 		return $this->db->update('users', $data);
 	}
 
+	public function get_all_additional_info()
+	{
+		$q = $this->db->get('additional_infos');
+		return $q->result_array();
+	}
+
 }
 
 /* End of file user_model.php */

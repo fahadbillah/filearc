@@ -1,0 +1,38 @@
+<table class="table table-striped table-hover table-bordered">
+	<thead>
+		<tr>
+			<th>Info Name</th>
+			<th>Info Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(key, value) in allAdditionalInfo">
+			<td> {{value.additional_info_name}} </td>
+			<td> {{value.additional_info_value}} <button style="float:right;" class="btn btn-info" ng-click="edit({{key}})"><i class="fa fa-gear"></i></button> </td>
+		</tr>
+	</tbody>
+
+
+
+</table>
+
+<form name="additionalInfoForm" ng-submit="addNewInfo()" novalidate>
+	<legend>Add New Info</legend>
+
+	<div class="form-group">
+		<label for="">Info Name</label>
+		<input type="text" class="form-control" ng-model="newAdditionalInfo.id" ng-show="false">
+		<input type="text" name="name" class="form-control" ng-model="newAdditionalInfo.name" placeholder="Input name" required>
+		<span class="label label-danger" ng-if="additionalInfoForm.name.$error.required && additionalInfoForm.name.$dirty">Required</span>
+	</div>
+	<div class="form-group">
+		<label for="">Info Value</label>
+		<input type="text" name="value" class="form-control" ng-model="newAdditionalInfo.value" placeholder="Input value" required>
+		<span class="label label-danger" ng-if="additionalInfoForm.value.$error.required && additionalInfoForm.value.$dirty">Required</span>
+	</div>
+
+
+
+	<button type="submit" class="btn btn-primary" ng-disabled="additionalInfoForm.$invalid || additionalInfoForm.$pristine || clicked">Submit</button>
+	<button type="button" ng-click="clear()" class="btn btn-warning">clear</button>
+</form>

@@ -1,0 +1,26 @@
+<style type="text/css">
+.form-control,input,select,textarea{
+	background-color: rgba(255, 255, 255, 0.9) !important;
+}
+</style>
+
+<form name="applicationForm" ng-submit="submitApplication()">
+	<legend>Application for Completion</legend>
+
+	<div class="form-group">
+		<label for="">Applicaiton</label>
+		<textarea class="form-control" rows="20" ng-model="application.application"></textarea>
+	</div>
+	<div class="form-group">
+		<label for="">Faculty Name</label>
+		<input type="text" class="form-control" ng-model="application.faculty" placeholder="Input field">
+	</div>
+	<div class="form-group">
+		<label for="">Department Chairman</label>
+		<input type="text" class="form-control" ng-model="search" ng-keyup="searchAdditionalInfo()" placeholder="Input field">
+		{{application.chairman}}
+		<!-- <input type="text" class="form-control" ng-model="application.chairman" placeholder="Input field"> -->
+	</div>
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -101,7 +101,7 @@
  	};
 
  	$scope.emailCheck = function() {
- 		$http.get('api/index.php/auth/email_check/'+encodeURIComponent($scope.form.email.trim()))
+ 		$http.post('api/index.php/auth/email_check',{email:$scope.form.email.trim()})
  		.success(function(data) {
  			console.log(data);
  			if (data.success === false) {

@@ -70,12 +70,53 @@
  								class: ''
  							},
  							{
+ 								url: '#/officeInfo',
+ 								title: 'Office',
+ 								class: ''
+ 							},
+ 							{
  								url: '#/logout',
  								title: 'Log Out',
  								class: ''
  							},
  							];
  							scope.logoLink = '#/adminpanel';
+
+ 						} else if(data.user_type === 'faculty') {
+
+ 							scope.links = [
+ 							{
+ 								url: '#/',
+ 								title: 'Home',
+ 								class: ''
+ 							},
+ 							{
+ 								url: '#/facultyApplication',
+ 								title: 'Application',
+ 								class: ''
+ 							},
+ 							{
+ 								url: '#/uploader',
+ 								title: 'Upload',
+ 								class: ''
+ 							},
+ 							{
+ 								url: '#/profile',
+ 								title: 'Profile',
+ 								class: ''
+ 							},
+ 							{
+ 								url: '#/favorites',
+ 								title: 'Favorites',
+ 								class: ''
+ 							},
+ 							{
+ 								url: '#/logout',
+ 								title: 'Log Out',
+ 								class: ''
+ 							},
+ 							];
+ 							scope.logoLink = '#/';
 
  						} else{
 

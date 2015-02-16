@@ -55,4 +55,16 @@
  		// return returnData;
 
  	};
- }]);
+ }])
+.filter('camelCaseToTitle',[function() {
+	return function(camelCase) {
+		console.log(camelCase);
+		var t  = camelCase.split('_');
+		var string = '';
+		angular.forEach(t,function(e,i){
+			string += e.charAt(0).toUpperCase() + e.slice(1) +' ';
+		})
+		return string;
+	}
+}]);
+

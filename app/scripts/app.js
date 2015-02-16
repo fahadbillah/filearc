@@ -68,6 +68,14 @@
     templateUrl: 'views/adminpanel.html',
     controller: 'AdminpanelCtrl'
   })
+  .when('/officeInfo', {
+    templateUrl: 'views/officeinfo.html',
+    controller: 'OfficeinfoCtrl'
+  })
+  .when('/facultyApplication', {
+    templateUrl: 'views/facultyapplication.html',
+    controller: 'FacultyapplicationCtrl'
+  })
   .otherwise({
     redirectTo: '/auth'
   });

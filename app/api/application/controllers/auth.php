@@ -231,12 +231,15 @@ class Auth extends CI_Controller {
 		// vd($postdata);
 	}
 
-	public function email_check($email = '')
+	public function email_check()
 	{
+		$postdata = get_post();
+		// vd($postdata);
+		// exit();
 		$check = array(
 		               'table' => 'users', 
 		               'column' => 'email', 
-		               'value' => urldecode($email), 
+		               'value' => $postdata['email'], 
 		               );
 		if (count($this->User_model->check_if_exists($check))>0) {
 			jsonify(array(
@@ -316,40 +319,12 @@ class Auth extends CI_Controller {
 
 	public function test()
 	{
-		//$this->db->select('*');
-		///$this->db->from('users');
-		// $this->db->limit(5);
-		//$q = $this->db->get();
-		//pr($q->result_array());
-
-		 $config['protocol'] = 'smtp';
-		 $config['smtp_host'] = 'smtp.tarifrr.info';
-		 $config['smtp_user'] = 'nsuprojects@tarifrr.info';
-		 $config['smtp_pass'] = 'Test1234';
-		// $config['smtp_user'] = 'me@fahadbillah.com';
-		// $config['smtp_pass'] = '3O$@#Vi&f*A3';
-		// $config['protocol'] = 'smtp';
-		// $config['smtp_host'] = 'mail.fahadbillah.com';
-		// $config['smtp_port'] = 26;
-		 $config['mailtype'] = 'html';
-		 $config['wordwrap'] = TRUE;
-
-		 $this->load->library('email');
-		 $this->email->initialize($config);
-
+		$q = $this->db->query('DESCRIBE additional_infos;');
+		$result = $q->result();
 		
-		 $this->email->from('nsuprojects@tarifrr.info', 'NSU Projects');
-		 $this->email->to('billah22@gmail.com', 'Fahad');
-		
-		 $this->email->subject('subject');
-		 $this->email->message('message');
-		
-		 $this->email->send();
-		
-		echo $this->email->print_debugger();
-		// echo "<pre>";
-		// print_r($this->session->all_userdata());
-		// echo "</pre>";
+		echo "<pre>";
+		vd($result);
+		echo "</pre>";
 	}
 
 	public function activate_account($activation_code)
