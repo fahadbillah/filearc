@@ -1,0 +1,53 @@
+<form class="">
+	<legend>Upload Profile Pic</legend>
+
+	
+
+	<!-- <button ng-click="item.upload()">upload</button> -->
+</form>
+
+
+<table class="table table-stripped table-hover table-responsive">
+	<tbody>
+		<tr>
+			<th>Profile Picture: </th>
+			<th>
+				<img class="img-thumbnail" width="150px;" src="{{baseUrl}}api/uploads/{{user.profile_picture}}" alt="Fahad">
+				<div class="form-group">
+					<input ng-model="fileField" class="form-control" type="file" nv-file-select uploader="uploader"/>
+				</div>
+
+				<div class="form-group">
+					<!-- <label for="">Name </label> -->
+					<li ng-repeat="item in uploader.queue">
+						Name: <span ng-bind="item.file.name"></span><br/>
+						<button class="btn btn-primary" ng-click="item.upload()">upload</button>
+					</li>
+					<!-- <span ng-bind="item.file.name"></span> -->
+				</div>
+				
+				<div class="progress">
+					<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="{{uploader.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{ 'width': uploader.progress + '%' }" style="width: 0%;">
+						<span class="sr-only">{{uploader.progress}}% Complete</span>
+					</div>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<th>Name: </th>
+			<th>{{user.first_name}} {{user.last_name}}</th>
+		</tr>
+		<tr>
+			<th>Email:</th>
+			<th>{{user.email}}</th>
+		</tr>
+		<tr>
+			<th>Academic ID:</th>
+			<th>{{user.academic_id}}</th>
+		</tr>
+		<tr>
+			<th>File uploaded:</th>
+			<th>{{count}}</th>
+		</tr>
+	</tbody>
+</table>

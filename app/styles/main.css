@@ -1,0 +1,140 @@
+/* Space out content a bit */
+
+/*@font-face {
+font-family: 'Lato';
+src: url(fonts/Lato-Regular.ttf);
+}*/
+@import url(http://fonts.googleapis.com/css?family=Lato);
+.body {   
+  font-family: 'Lato', sans-serif !important;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);
+  background: url('../images/turbine.jpg') no-repeat top fixed;   
+  -webkit-background-size: cover;  
+  -moz-background-size: cover;  
+  -o-background-size: cover;  
+  background-size: cover;  
+}  
+
+body {
+  /*padding-top: 20px;*/
+  padding-bottom: 20px;
+}
+
+.progress,.form-control{
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  border-radius: 0px !important;
+  border: 0px !important;
+}
+
+.navbar-default {
+  background-color: #091E11 !important;
+  border-color: #091E11 !important;
+}
+
+.btn-default {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.fa-download{
+  color: #358435;
+}
+
+table{
+  background-color: rgba(255, 253, 253, 0.5) !important;
+}
+
+tbody th{
+  text-align: center;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+.navbar{
+  border-radius: 0px !important;
+}
+
+/* alert box at the top*/
+.custom-alert{
+  /*position: fixed;*/
+  /*top: 20px;*/
+  z-index: 100;
+  border-radius: 0px !important;
+}
+
+.btn{
+  border: 0px !important;
+  border-radius: 0px !important;
+}
+
+/* Custom page footer */
+.footer {
+  margin-top: 20px;
+  padding-top: 19px;
+  color: red;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}

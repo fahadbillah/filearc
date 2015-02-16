@@ -1,0 +1,42 @@
+<style type="text/css">
+tr {
+  cursor: pointer;
+}
+
+</style>
+
+<input type="text" ng-model="search" ng-change="searchFile()" placeholder="Search File" class="form-control">
+<table class="table table-hover table-responsive">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <!-- <th>Category</th> -->
+      <th>Download Link</th>
+      <th>Details</th>
+      <th>Uploaded By</th>
+      <th>Date Uploaded</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="(key, value) in files | limitTo: itemVisible">
+      <td ng-click="goToDetails({{value.id_files}})">{{value.file_title}}</td>
+      <!-- <td ng-click="goToDetails({{value.id_files}})">{{value.category_name}}</td> -->
+      <td>
+        <a target="_self" href="{{baseUrl}}api/uploads/{{value.file_url}}" download="{{createFileName(value)}}">
+          <button type="button" class="btn btn-default"><i class="fa fa-download fa-lg"></i></button>
+        </a>
+      </td>
+      <!-- <td>{{value.file_url | limitTo : 20}}</td> -->
+      <td ng-click="goToDetails({{value.id_files}})">{{value.file_details}}</td>
+      <td ng-click="goToDetails({{value.id_files}})">{{value.first_name}} {{value.last_name}} <span class="badge" ng-if="value.user_type == 'faculty'" style="display:inline;">F</span></td>
+      <td ng-click="goToDetails({{value.id_files}})">{{value.file_added}}</td>
+    </tr>
+    <tr>
+      <td colspan="6" align="center">
+        <button type="button" class="btn btn-default" ng-click="loadMore()">
+          <i class="fa fa-refresh fa-spin" ng-show="loading"></i> Load More
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

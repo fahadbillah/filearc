@@ -1,0 +1,46 @@
+<table class="table table-hover table-striped">
+	<tbody>
+		<tr>
+			<th>File Name</th>
+			<td>{{file.data[0].file_title | uppercase}}</td>
+		</tr>
+		<tr>
+			<th>File Details</th>
+			<td>{{file.data[0].file_details}}</td>
+		</tr>
+		<tr>
+			<th>File category</th>
+			<td>{{file.data[0].category_name}}</td>
+		</tr>
+		<tr>
+			<th>file tags</th>
+			<td>
+				<button class="btn btn-info" ng-repeat="(key, value) in file.data">{{value.tag_name}}</button>
+			</td>
+		</tr>
+		<tr>
+			<th>Uploader</th>
+			<td>{{file.data[0].first_name}} {{file.data[0].last_name}}</td>
+		</tr>
+		<tr>
+			<th>Add to favorite</th>
+			<td> <favorite></favorite> <strong>Total Favorite: {{file.total_favorite}}</strong></td>
+		</tr>
+		<tr>
+			<th>Like</th>
+			<td> <like></like> <strong>Total Liked: {{file.total_liked}}</strong></td>
+		</tr>
+		<tr>
+			<th>Download</th>
+			<td> 
+				<a ng-href="api/uploads/{{file.data[0].file_url}}" download="{{createFileName(file.data[0])}}">
+					<button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download</button>
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<th>Date Uploaded</th>
+			<td>{{file.data[0].file_added}}</td>
+		</tr>
+	</tbody>
+</table>

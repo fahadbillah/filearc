@@ -1,0 +1,110 @@
+<style type="text/css">
+tr {
+	cursor: pointer;
+}
+</style>
+
+<!-- 
+File Title: <input ng-model="file.title" type="text"><br/>
+File Category: 
+<select ng-model="file.category">
+  <option>Select a category</option>
+  <option ng-repeat="(key, value) in categories" value="{{value.id_categories}}">{{value.category_name}}</option>
+</select><br/>
+File Details: 
+<textarea ng-model="file.details"></textarea><br/>
+
+<input type="file" nv-file-select uploader="uploader"/><br/>
+<ul>
+  <li ng-repeat="item in uploader.queue">
+    Name: <span ng-bind="item.file.name"></span><br/>
+    <button class="btn btn-primary" ng-click="item.upload()">upload</button>
+  </li>
+</ul> -->
+
+
+<form class="">
+	<legend>Form title</legend>
+
+	<div class="form-group">
+		<label for="">File Title *</label>
+		<input ng-model="file.title" type="text" class="form-control">
+	</div>
+
+
+
+	<!-- <div class="form-group">
+		<label for="">File Category</label>
+		<select class="form-control" ng-model="file.category">
+			<option value="">Select a category</option>
+			<option ng-repeat="(key, value) in categories" value="{{value.id_categories}}">{{value.category_name}}</option>
+		</select>
+	</div> -->
+
+	<div class="form-group">
+		<label for="">File Details *</label>
+		<textarea class="form-control" ng-model="file.details"></textarea>
+	</div>
+
+	<div class="form-group">
+		<label for="">Add Tags</label>
+		<div>
+			<input class="form-control" ng-model="tag" ng-enter="addTag()" placeholder="Write tag name and then enter">
+		</div>
+		<div>
+			<button class="btn btn-success" ng-repeat="(key, value) in tags">{{value.tag_name}}</button>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<!-- <label for="">label</label> -->
+		<input ng-model="fileField" class="form-control" type="file" nv-file-select uploader="uploader"/>
+	</div>
+
+	<div class="form-group">
+		<!-- <label for="">Name </label> -->
+		<li ng-repeat="item in uploader.queue">
+			Name: <span ng-bind="item.file.name"></span><br/>
+			<button class="btn btn-primary" ng-click="item.upload()">upload</button>
+		</li>
+		<!-- <span ng-bind="item.file.name"></span> -->
+	</div>
+	
+	<div class="progress" ng-show="progressBarShow">
+		<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="{{uploader.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{ 'width': uploader.progress + '%' }" style="width: 0%;">
+			<span class="sr-only">{{uploader.progress}}% Complete</span>
+		</div>
+	</div>
+
+	<!-- <button ng-click="item.upload()">upload</button> -->
+</form>
+
+
+<table class="table table-stripped table-hover table-responsive">
+	<caption>Your uploaded files</caption>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>File title</th>
+			<th>File link</th>
+			<th>Date details</th>
+			<th>Delete</th>
+			<th>Date uploaded</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(key, value) in files">
+			<td ng-click="goToDetails({{value.id_files}})">{{key+1}}</td>
+			<td ng-click="goToDetails({{value.id_files}})">{{value.file_title}}</td>
+			<td>
+				<a target="_self" href="{{baseUrl}}api/uploads/{{value.file_url}}" download="{{createFileName(value)}}">
+					<button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
+				</a>
+			</td>
+			<!-- <td><img src="{{baseUrl}}api/uploads/{{value.file_url}}" alt="" width="150px"></td> -->
+			<td ng-click="goToDetails({{value.id_files}})">{{value.file_details}}</td>
+			<td> <button type="button" class="btn btn-danger" ng-click="deleteFile({{value.id_files}})"><i class="fa fa-trash-o"></i></button> </td>
+			<td ng-click="goToDetails({{value.id_files}})">{{value.file_added}}</td>
+		</tr>
+	</tbody>
+</table>
