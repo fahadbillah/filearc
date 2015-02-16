@@ -56,13 +56,13 @@ class User_model extends CI_Model {
 	public function get_all_non_faculty()
 	{
 		$this->db->select('
-			id_users,
-			first_name,
-			last_name,
-			email,
-			academic_id,
-			user_type,
-			');
+		                  id_users,
+		                  first_name,
+		                  last_name,
+		                  email,
+		                  academic_id,
+		                  user_type,
+		                  ');
 		$this->db->from('users');
 		$this->db->where('user_type', null);
 		$this->db->or_where('user_type', 'student');
@@ -73,13 +73,13 @@ class User_model extends CI_Model {
 	public function get_all_faculty()
 	{
 		$this->db->select('
-			id_users,
-			first_name,
-			last_name,
-			email,
-			academic_id,
-			user_type,
-			');
+		                  id_users,
+		                  first_name,
+		                  last_name,
+		                  email,
+		                  academic_id,
+		                  user_type,
+		                  ');
 		$this->db->from('users');
 		$this->db->or_where('user_type', 'faculty');
 		$q = $this->db->get();
@@ -95,14 +95,19 @@ class User_model extends CI_Model {
 
 		// var_dump($q1->result_array());
 		// return false;
-		if ($q1->result_array()[0]['user_type'] != 'faculty') {
+		// var_dump($q1->result_array());
+		// exit();
+		$users = $q1->result_array();
+		// return $users;
+
+		if ($users[0]['user_type'] != 'faculty') {
 			$data = array(
-				'user_type' => 'faculty', 
-				);
+			              'user_type' => 'faculty', 
+			              );
 		}else{
 			$data = array(
-				'user_type' => 'student', 
-				);
+			              'user_type' => 'student', 
+			              );
 		}
 		$this->db->where('id_users', $id_users);
 		return $this->db->update('users', $data);

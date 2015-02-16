@@ -1,0 +1,39 @@
+CodeIgniter is a powerful PHP framework with a very small footprint, 
+built for PHP coders who need a simple and elegant toolkit to create full-featured web applications. 
+
+CodeIgniter is loosely based on the popular Model-View-Controller development pattern. 
+While view and controller classes are a necessary part of development under CodeIgniter, 
+models are optional for use in building dynamic web sites with PHP
+
+
+CodeIgniter is most often noted for its speed when compared to other PHP frameworks
+
+CodeIgniter's source code is maintained at GitHub.
+
+
+Why we chose CodeIgniter?
+Small
+Fast
+Simple
+Customer Ready
+
+
+How to use CI?
+After downloading CI, 
+put it in server/htdocs
+create database
+configure CI base URL
+configure Database Connection
+
+Model:
+Get
+Put
+GetAll
+Delete
+
+Controller:
+Add
+
+View:
+List
+
