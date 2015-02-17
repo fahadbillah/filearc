@@ -14,7 +14,8 @@
     "angular-route": "1.2.16",
     "font-awesome": "*",
     "angular-file-upload": "*",
-    "ngImgCrop": "*"
+    "ngImgCrop": "*",
+    "angular-filter": "*"
     },
     "devDependencies": {
       "angular-mocks": "1.2.16",

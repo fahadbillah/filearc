@@ -35,16 +35,20 @@
  	};
 
  	getMyProfileInfo();
+ 	$scope.search = '';
 
-
- 	$scope.searchAdditionalInfo = function() {
- 		$http.get('api/index.php/admin/search_additional_info/'+encodeURIComponent($scope.search))
- 		.success(function(data) {
- 			console.log(data);
- 		})
- 		.error(function(data) {
- 			console.log(data);
+ 	$scope.searchAdditionalInfo = function(search) {
+ 		$scope.resultArray = [];
+ 		if (search ==''){
+ 			return;
+ 		}
+ 		angular.forEach($scope.allAdditionalInfo,function(e,i){
+ 			var string = new RegExp(search,"i");
+ 			if(e.additional_info_name.search(string) >= 0){
+ 				$scope.resultArray.push(e);
+ 			}
  		});
+ 		console.log($scope.resultArray);
  	}
  	$scope.allAdditionalInfo = [];
 
@@ -63,5 +67,16 @@
  	}
 
  	loadAdditionalInfo();
+
+ 	$scope.clearResult = function() {
+ 		$scope.resultArray = [];
+ 	}
+
+ 	$scope.showPrint = false;
+ 	$scope.togglePrintShow = function() {
+
+ 		$scope.showPrint = $scope.showPrint ? false : true;
+
+ 	}
 
  }]);
