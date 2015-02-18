@@ -11,13 +11,32 @@ form{
 }
 </style>
 
-<form name="applicationForm" ng-submit="togglePrintShow()" ng-if="!showPrint">
+<form name="applicationForm" ng-submit="togglePrintShow()" ng-if="showPrint">
 	<legend>Application for Completion</legend>
+
+	<div class="form-group">
+		<label for="">Student Name</label>
+		<button class="btn btn-success btn-lg" style="margin:0px 20px;"> {{application.student}} </button>
+		<!-- <input type="text" class="form-control" ng-model="application.faculty" placeholder="Input field"> -->
+	</div>
 
 	<div class="form-group">
 		<label for="">Applicaiton</label>
 		<textarea class="form-control" rows="20" name="application" ng-model="application.application"></textarea>
 		<span class="label label-danger" ng-if="applicationForm.application.$error.required && applicationForm.application.$dirty">Required</span>
+	</div>
+	<div class="form-group">
+		<input type="text" class="form-control" ng-model="searchStudent" ng-keyup="searchStudentInfo(searchStudent)" placeholder="Search for Student">
+		<table class="table table-condensed table-hover search-result" ng-if="!!resultArray.length">			
+			<tbody>
+				<tr ng-repeat="(key, value) in resultArray" ng-click="application.student = {{value.first_name}} {{value.last_name}};">
+					<th>{{value.academic_id}}</th>
+					<th>{{value.first_name}} {{value.last_name}}</th>
+				</tr>
+			</tbody>
+		</table>
+		<br>
+		<!-- <input type="text" class="form-control" ng-model="application.chairman" placeholder="Input field"> -->
 	</div>
 	<div class="form-group">
 		<label for="">Faculty Name</label>
@@ -26,15 +45,15 @@ form{
 	</div>
 	<div class="form-group">
 		<label for="">Department Chairman</label>
-		<button ng-if="application.chairman" class="btn btn-warning btn-lg" style="margin: 0px 20px;">{{application.chairman}} <i class="fa fa-close" ng-click="application.chairman = ''"></i></button>
+		<button ng-if="application.chairman" class="btn btn-warning btn-lg" style="margin: 0px 20px;">{{application.chairman.additional_info_value}} <i class="fa fa-close" ng-click="application.chairman = ''"></i></button>
 	</div>
 	<div class="form-group">
 		<input type="text" class="form-control" ng-model="search" ng-keyup="searchAdditionalInfo(search)" placeholder="Search for Official like Chairman, Dean">
 		<table class="table table-condensed table-hover search-result" ng-if="!!resultArray.length">			
 			<tbody>
 				<tr ng-repeat="(key, value) in resultArray" ng-click="application.chairman = value; clearResult()">
-					<th>{{value.additional_info_value}}</th>
 					<th>{{value.additional_info_name}}</th>
+					<th>{{value.additional_info_value}}</th>
 				</tr>
 			</tbody>
 		</table>
@@ -45,13 +64,22 @@ form{
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-<div ng-if="showPrint">
-	<div>
+<div ng-if="!showPrint">
+	<!-- <div>
 
 		<pre>{{application.application}}</pre>
 		{{application.faculty}}
 		{{application.chairman.additional_info_value}}
+	</div> -->
+
+	<div style="background-color:#bbb;padding:20px;margin:20px 0px;">
+		<div style="text-align:center;">
+			<img src="http://upload.wikimedia.org/wikipedia/en/b/b6/Logo_of_NSU.png" width="50">
+			<h4>North South University</h4>
+		</div>
+
 	</div>
+
 
 	<button type="button" class="btn btn-info" ng-click="togglePrintShow()">Back</button>
 </div>

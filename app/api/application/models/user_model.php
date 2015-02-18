@@ -53,7 +53,7 @@ class User_model extends CI_Model {
 		$this->db->update('users', $data);
 	}
 
-	public function get_all_non_faculty()
+	public function get_all_student()
 	{
 		$this->db->select('
 		                  id_users,

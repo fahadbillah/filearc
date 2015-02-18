@@ -31,9 +31,9 @@ class Admin extends CI_Controller {
 		echo "this is admin page";
 	}
 
-	public function get_all_non_faculty()
+	public function get_all_student()
 	{
-		$data = $this->user_model->get_all_non_faculty();
+		$data = $this->user_model->get_all_student();
 
 
 		jsonify(array(

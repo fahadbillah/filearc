@@ -76,7 +76,7 @@
  	getAllFaculty();
 
  	var getAllNonFaculty = function() {
- 		$http.get('api/index.php/admin/get_all_non_faculty')
+ 		$http.get('api/index.php/admin/get_all_student')
  		.success(function(data) {
  			console.log(data);
  			allUsers = data.data;

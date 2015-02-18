@@ -18,6 +18,7 @@
 
  	$scope.application = {
  		application: '',
+ 		student: '',
  		faculty: '',
  		chairman: '',
  	}
@@ -79,4 +80,38 @@
 
  	}
 
+
+
+ 	$scope.searchStudent = '';
+
+ 	$scope.searchStudentInfo = function(search) {
+ 		$scope.resultArray = [];
+ 		if (search ==''){
+ 			return;
+ 		}
+ 		angular.forEach($scope.allStudents,function(e,i){
+ 			var string = new RegExp(search,"i");
+ 			if(e.academic_id.search(string) >= 0){
+ 				$scope.resultArray.push(e);
+ 			}
+ 		});
+ 		console.log($scope.resultArray);
+ 	}
+
+ 	$scope.allStudents = [];
+
+ 	var getAllStudent = function() {
+ 		$http.get('api/index.php/admin/get_all_student')
+ 		.success(function(data) {
+ 			if(data.success === true){
+ 				$scope.allStudents = data.data;
+ 			}else{
+ 			}
+ 			console.log(data);
+ 		})
+ 		.error(function(data) {
+ 			console.log(data);
+ 		});
+ 	}
+ 	getAllStudent();
  }]);
