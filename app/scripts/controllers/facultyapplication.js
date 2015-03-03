@@ -18,9 +18,15 @@
 
  	$scope.application = {
  		application: '',
- 		student: '',
+ 		student: {
+ 			academic_id: '',
+ 			name: '',
+ 			id_users: '',
+ 		},
  		faculty: '',
  		chairman: '',
+ 		semester: '',
+ 		course: '',
  	}
 
 
@@ -58,10 +64,16 @@
  		.success(function(data) {
  			if(data.success === true){
  				$scope.allAdditionalInfo = data.data;
- 			}else{
- 			}
- 			console.log(data);
- 		})
+
+
+ 				// angular.forEach(data.data, function(e,i) {
+ 				// 	console.log(e);
+ 				// 	application.chairman = '';
+ 				// })
+ 	}else{
+ 	}
+ 	console.log(data);
+ })
  		.error(function(data) {
  			console.log(data);
  		});
@@ -114,4 +126,38 @@
  		});
  	}
  	getAllStudent();
+
+ 	$scope.capitalizeFirstLetter = function(string) {
+
+ 		string = string.split(' ');
+
+ 		var returnedString = '';
+ 		angular.forEach(string, function(e,i) {
+ 			returnedString += e.charAt(0).toUpperCase() + e.slice(1) +' ';
+ 		});
+
+ 		return returnedString;
+ 	}
+
+ 	$scope.searchStudent = function(key) {
+ 		$scope.resultArray = [];
+ 		if (key ==''){
+ 			return;
+ 		}
+ 		angular.forEach($scope.allStudents,function(e,i){
+ 			var string = new RegExp(key,"i");
+ 			if(e.academic_id.search(string) >= 0){
+ 				$scope.resultArray.push(e);
+ 			}
+ 		});
+ 	}
+
+
+ 	$scope.selectStudent = function(v) {
+ 		$scope.application.student.id_users = v.id_users;
+ 		$scope.application.student.name = $scope.capitalizeFirstLetter(v.first_name)+" "+$scope.capitalizeFirstLetter(v.last_name);
+ 		$scope.application.student.academic_id = v.academic_id;
+ 		$scope.resultArray = [];
+ 		console.log($scope.application.student);
+ 	}
  }]);

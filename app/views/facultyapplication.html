@@ -9,15 +9,19 @@ form{
 .search-result tr,td{
 	cursor: pointer;
 }
+.form-control{
+	height: 25px !important;
+	border-bottom: 1px dashed black !important;
+	text-align: center !important;
+}
 </style>
 
-<form name="applicationForm" ng-submit="togglePrintShow()" ng-if="showPrint">
+<!-- <form name="applicationForm" ng-submit="togglePrintShow()" ng-if="showPrint">
 	<legend>Application for Completion</legend>
 
 	<div class="form-group">
 		<label for="">Student Name</label>
 		<button class="btn btn-success btn-lg" style="margin:0px 20px;"> {{application.student}} </button>
-		<!-- <input type="text" class="form-control" ng-model="application.faculty" placeholder="Input field"> -->
 	</div>
 
 	<div class="form-group">
@@ -36,12 +40,10 @@ form{
 			</tbody>
 		</table>
 		<br>
-		<!-- <input type="text" class="form-control" ng-model="application.chairman" placeholder="Input field"> -->
 	</div>
 	<div class="form-group">
 		<label for="">Faculty Name</label>
 		<button class="btn btn-success btn-lg" style="margin:0px 20px;"> {{application.faculty}} </button>
-		<!-- <input type="text" class="form-control" ng-model="application.faculty" placeholder="Input field"> -->
 	</div>
 	<div class="form-group">
 		<label for="">Department Chairman</label>
@@ -58,28 +60,66 @@ form{
 			</tbody>
 		</table>
 		<br>
-		<!-- <input type="text" class="form-control" ng-model="application.chairman" placeholder="Input field"> -->
 	</div>
 
 	<button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</form> -->
 
 <div ng-if="!showPrint">
-	<!-- <div>
+	<div>
+	<!-- 
+			<pre>{{application.application}}</pre>
+			{{application.faculty}}
+			{{application.chairman.additional_info_value}}
+		-->	
+	</div>
 
-		<pre>{{application.application}}</pre>
-		{{application.faculty}}
-		{{application.chairman.additional_info_value}}
-	</div> -->
-
-	<div style="background-color:#bbb;padding:20px;margin:20px 0px;">
+	<div style="background-color:#bbb;padding:20px;margin:20px 0px;overflow: hidden;">
 		<div style="text-align:center;">
-			<img src="http://upload.wikimedia.org/wikipedia/en/b/b6/Logo_of_NSU.png" width="50">
-			<h4>North South University</h4>
-		</div>
+			<img src="http://upload.wikimedia.org/wikipedia/en/b/b6/Logo_of_NSU.png" width="150">
+			<br>
+			<br>
+			<br>
+			<h4>Project Completion Acknowledgement</h4><br>
+			<br>
+			<br>
+			<br>
 
+			<p style="line-height: 3;text-align: justify;padding: 0px 33px;">
+				This is to certify that <input type="text" class="form-control" style="width:30%;display: inline;" placeholder="Student name" ng-model="application.student.name"> ID 
+				<span>
+					<input type="text" class="form-control" ng-keyup="searchStudent(application.student.academic_id)" placeholder="Student Id" style="width:30%;display: inline;" ng-model="application.student.academic_id">
+					<table class="table table-condensed table-hover search-result" ng-if="!!resultArray.length">			
+						<tbody>
+							<tr ng-repeat="(key, value) in resultArray" ng-click="selectStudent(value)">
+								<th>{{value.first_name}} {{value.last_name}}</th>
+								<th>{{value.academic_id}}</th>
+							</tr>
+						</tbody>
+					</table>
+				</span> has passed <input type="text" class="form-control" style="width:30%;display: inline;" placeholder="Course code: ex. CSE-499"> by completing the <label><input name="type" type="radio"> Thesis </label> <label><input name="type" type="radio"> Internship</label> <label><input name="type" type="radio"> Research</label> titled <input type="text" class="form-control" style="width:90%;display: inline;"  placeholder="Title"> under supervision of {{capitalizeFirstLetter(application.faculty)}} in  <input type="text" class="form-control" style="width:30%;display: inline;" placeholder="Semester: ex. Spring-15" ng-model="application.semester">
+			</p>
+			<br>
+			<br>
+			<p>The Student also submitted the report along with all necessary materials to the respective faculty.</p>
+			<br>
+			<br>
+			<br>
+			<div class="col-xs-6">
+				_______________________ <br>
+				{{capitalizeFirstLetter(application.faculty)}} <!-- <input type="text" class="form-control" style="width:200px;display: inline;" placeholder="Faculty Name" ng-model="application.faculty"> --> <br>
+				Course Supervisor
+			</div>
+			<div class="col-xs-6">
+				_______________________ <br>
+				<input type="text" class="form-control" style="width:200px;display: inline;" placeholder="Chairman Name"> 
+				<br>
+				Chairman of ECE <br>
+				North South University
+			</div>
+		</div>
 	</div>
 
 
-	<button type="button" class="btn btn-info" ng-click="togglePrintShow()">Back</button>
+	<button type="button" class="btn btn-info" ng-click="togglePrintShow()">Print Preview</button>
 </div>
