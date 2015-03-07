@@ -138,3 +138,10 @@ tbody th{
     border-bottom: 0;
   }
 }
+
+
+@media print {
+  .print-hide{
+    display: none !important;
+  }
+}

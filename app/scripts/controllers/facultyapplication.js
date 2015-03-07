@@ -18,15 +18,12 @@
 
  	$scope.application = {
  		application: '',
- 		student: {
- 			academic_id: '',
- 			name: '',
- 			id_users: '',
- 		},
+ 		student: {},
  		faculty: '',
  		chairman: '',
  		semester: '',
  		course: '',
+ 		type: '',
  	}
 
 
@@ -85,9 +82,9 @@
  		$scope.resultArray = [];
  	}
 
- 	$scope.showPrint = false;
+ 	$scope.showPrint = true;
  	$scope.togglePrintShow = function() {
-
+ 		console.log($scope.application);
  		$scope.showPrint = $scope.showPrint ? false : true;
 
  	}
@@ -154,10 +151,40 @@
 
 
  	$scope.selectStudent = function(v) {
- 		$scope.application.student.id_users = v.id_users;
- 		$scope.application.student.name = $scope.capitalizeFirstLetter(v.first_name)+" "+$scope.capitalizeFirstLetter(v.last_name);
- 		$scope.application.student.academic_id = v.academic_id;
+ 		$scope.application.student = v;
+ 		// $scope.application.student.name = $scope.capitalizeFirstLetter(v.first_name)+" "+$scope.capitalizeFirstLetter(v.last_name);
+ 		// $scope.application.student.academic_id = v.academic_id;
  		$scope.resultArray = [];
- 		console.log($scope.application.student);
+ 		// console.log($scope.application.student);
  	}
+
+ 	$scope.saveApplication = function() {
+
+ 		if (!window.confirm('Confirm submission!')) {
+ 			return false;
+ 		};
+
+ 		$http.post('api/index.php/admin/student_completion_certificate',$scope.application)
+ 		.success(function(data) {
+ 			console.log(data);
+ 			// if (data.success === false) {
+ 			// }else{
+ 			// }
+ 			alert(data.message)
+ 		})
+ 		.error(function(data) {
+ 			console.log('http error occured!');
+ 			console.log(data);
+ 		});
+ 	}
+
+ 	$scope.print = function() {
+ 		window.print();
+ 	}
+
+ 	$scope.saveNPrint = function() {
+ 		$scope.saveApplication();
+ 		$scope.print();
+ 	}
+
  }]);

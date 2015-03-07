@@ -146,6 +146,35 @@ class Admin extends CI_Controller {
 
 	}
 
+	public function student_completion_certificate()
+	{
+		$rcv = get_post();
+
+
+		$additional_info_name = 'application_'.$rcv['student']->academic_id;
+
+		$student = array(
+		                 'additional_info_name' => $additional_info_name,
+		                 'additional_info_value' => serialize($rcv),
+		                 );
+		$result = $this->user_model->insert_student_completion_certificate($student);
+
+		// echo "<pre>";
+		// print_r($student);
+		// echo $additional_info_name;
+		// var_dump($rcv);
+		// print_r($result);
+		// echo "</pre>";
+		jsonify($result);
+	}
+
+	public function test()
+	{
+		echo "<pre>";
+		pr($this->user_model->get_all_additional_info());
+		echo "</pre>";
+	}
+
 }
 
 /* End of file admin.php */

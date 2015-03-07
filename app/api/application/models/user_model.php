@@ -115,8 +115,26 @@ class User_model extends CI_Model {
 
 	public function get_all_additional_info()
 	{
+		$this->db->not_like('additional_info_name','application','after');
 		$q = $this->db->get('additional_infos');
 		return $q->result_array();
+	}
+
+	public function insert_student_completion_certificate($student)
+	{
+		$this->db->where('additional_info_name', $student['additional_info_name']);
+		$exists = $this->db->count_all_results('additional_infos');
+
+		if ($exists) {
+			return array(
+			             'success' => false,
+			             'message' => 'Student application already exists!',
+			             );
+		}else{
+			$result = $this->db->insert('additional_infos', $student);
+			return ($result) ? array('success' => true,'message' => 'Application saved successfully!',) : array('success' => false,'message' => 'Application save failed!',);
+		}
+
 	}
 
 }

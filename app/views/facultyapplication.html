@@ -3,37 +3,29 @@ form{
 	background-color: #b4b4b4 !important;
 	padding: 20px;
 }
-.form-control,input,select,textarea{
+.form-control:not([disabled]),input,select,textarea{
 	background-color: rgba(255, 255, 255, 0.9) !important;
 }
 .search-result tr,td{
 	cursor: pointer;
 }
-.form-control{
+.form-control:not(textarea){
 	height: 25px !important;
 	border-bottom: 1px dashed black !important;
 	text-align: center !important;
 }
+
 </style>
 
-<!-- <form name="applicationForm" ng-submit="togglePrintShow()" ng-if="showPrint">
+<form name="applicationForm" ng-submit="togglePrintShow()" ng-if="showPrint">
 	<legend>Application for Completion</legend>
 
 	<div class="form-group">
-		<label for="">Student Name</label>
-		<button class="btn btn-success btn-lg" style="margin:0px 20px;"> {{application.student}} </button>
-	</div>
-
-	<div class="form-group">
-		<label for="">Applicaiton</label>
-		<textarea class="form-control" rows="20" name="application" ng-model="application.application"></textarea>
-		<span class="label label-danger" ng-if="applicationForm.application.$error.required && applicationForm.application.$dirty">Required</span>
-	</div>
-	<div class="form-group">
-		<input type="text" class="form-control" ng-model="searchStudent" ng-keyup="searchStudentInfo(searchStudent)" placeholder="Search for Student">
+		<label for="">Student ID</label>
+		<input type="text" class="form-control" ng-model="application.student.academic_id" ng-keyup="searchStudentInfo(application.student.academic_id)" placeholder="Search for Student">
 		<table class="table table-condensed table-hover search-result" ng-if="!!resultArray.length">			
 			<tbody>
-				<tr ng-repeat="(key, value) in resultArray" ng-click="application.student = {{value.first_name}} {{value.last_name}};">
+				<tr ng-repeat="(key, value) in resultArray" ng-click="selectStudent(value)">
 					<th>{{value.academic_id}}</th>
 					<th>{{value.first_name}} {{value.last_name}}</th>
 				</tr>
@@ -41,19 +33,50 @@ form{
 		</table>
 		<br>
 	</div>
+
+	<div class="form-group">
+		<label for="">Student Name</label>
+		<input type="text" class="form-control" value="{{application.student.first_name}}  {{application.student.last_name}}" disabled>
+	</div>
+
+	<div class="form-group">
+		<label for="">Applicaiton</label>
+		<textarea class="form-control" rows="20" name="application" ng-model="application.application"></textarea>
+		<span class="label label-danger" ng-if="applicationForm.application.$error.required && applicationForm.application.$dirty">Required</span>
+	</div>
+
 	<div class="form-group">
 		<label for="">Faculty Name</label>
 		<button class="btn btn-success btn-lg" style="margin:0px 20px;"> {{application.faculty}} </button>
 	</div>
+
+	<div class="form-group">
+		<label for="">Course</label>
+		<input type="text" class="form-control" ng-model="application.course">
+	</div>
+
+	<div class="form-group">
+		<label for="">Semester</label>
+		<input type="text" class="form-control" ng-model="application.semester">
+	</div>
+
+	<div class="form-group">
+		<label for="">Semester</label>
+		<label><input type="radio" name="type" ng-click="application.type = 'Thesis'"> Thesis</label>
+		<label><input type="radio" name="type" ng-click="application.type = 'Project'"> Project</label>
+		<label><input type="radio" name="type" ng-click="application.type = 'Intern'"> Intern</label>
+	</div>
+
 	<div class="form-group">
 		<label for="">Department Chairman</label>
 		<button ng-if="application.chairman" class="btn btn-warning btn-lg" style="margin: 0px 20px;">{{application.chairman.additional_info_value}} <i class="fa fa-close" ng-click="application.chairman = ''"></i></button>
 	</div>
+
 	<div class="form-group">
 		<input type="text" class="form-control" ng-model="search" ng-keyup="searchAdditionalInfo(search)" placeholder="Search for Official like Chairman, Dean">
 		<table class="table table-condensed table-hover search-result" ng-if="!!resultArray.length">			
 			<tbody>
-				<tr ng-repeat="(key, value) in resultArray" ng-click="application.chairman = value; clearResult()">
+				<tr ng-repeat="(key, value) in resultArray" ng-click="application.chairman = value; clearResult(); search=''">
 					<th>{{value.additional_info_name}}</th>
 					<th>{{value.additional_info_value}}</th>
 				</tr>
@@ -63,18 +86,10 @@ form{
 	</div>
 
 	<button type="submit" class="btn btn-primary">Submit</button>
-</form> -->
+</form>
 
 <div ng-if="!showPrint">
-	<div>
-	<!-- 
-			<pre>{{application.application}}</pre>
-			{{application.faculty}}
-			{{application.chairman.additional_info_value}}
-		-->	
-	</div>
-
-	<div style="background-color:#bbb;padding:20px;margin:20px 0px;overflow: hidden;">
+	<div style="background-color:#bbb;padding:20px;margin:20px 0px;overflow: hidden; word-spacing: 1px;">
 		<div style="text-align:center;">
 			<img src="http://upload.wikimedia.org/wikipedia/en/b/b6/Logo_of_NSU.png" width="150">
 			<br>
@@ -86,22 +101,13 @@ form{
 			<br>
 
 			<p style="line-height: 3;text-align: justify;padding: 0px 33px;">
-				This is to certify that <input type="text" class="form-control" style="width:30%;display: inline;" placeholder="Student name" ng-model="application.student.name"> ID 
-				<span>
-					<input type="text" class="form-control" ng-keyup="searchStudent(application.student.academic_id)" placeholder="Student Id" style="width:30%;display: inline;" ng-model="application.student.academic_id">
-					<table class="table table-condensed table-hover search-result" ng-if="!!resultArray.length">			
-						<tbody>
-							<tr ng-repeat="(key, value) in resultArray" ng-click="selectStudent(value)">
-								<th>{{value.first_name}} {{value.last_name}}</th>
-								<th>{{value.academic_id}}</th>
-							</tr>
-						</tbody>
-					</table>
-				</span> has passed <input type="text" class="form-control" style="width:30%;display: inline;" placeholder="Course code: ex. CSE-499"> by completing the <label><input name="type" type="radio"> Thesis </label> <label><input name="type" type="radio"> Internship</label> <label><input name="type" type="radio"> Research</label> titled <input type="text" class="form-control" style="width:90%;display: inline;"  placeholder="Title"> under supervision of {{capitalizeFirstLetter(application.faculty)}} in  <input type="text" class="form-control" style="width:30%;display: inline;" placeholder="Semester: ex. Spring-15" ng-model="application.semester">
+				This is to certify that <strong><em>{{capitalizeFirstLetter(application.student.first_name)}} {{capitalizeFirstLetter(application.student.last_name)}}</em></strong> ID <strong><em>{{application.student.academic_id}}</em></strong> has passed <strong><em>{{application.course}}</em></strong> by completing the <strong><em>{{application.type}}</em></strong> titled <strong><em>{{application.application}}</em></strong>&nbsp;&nbsp;under supervision of <strong><em>{{capitalizeFirstLetter(application.faculty)}}</em></strong> in <strong><em>{{application.semester}}</em></strong>
 			</p>
 			<br>
 			<br>
 			<p>The Student also submitted the report along with all necessary materials to the respective faculty.</p>
+			<br>
+			<br>
 			<br>
 			<br>
 			<br>
@@ -112,8 +118,7 @@ form{
 			</div>
 			<div class="col-xs-6">
 				_______________________ <br>
-				<input type="text" class="form-control" style="width:200px;display: inline;" placeholder="Chairman Name"> 
-				<br>
+				{{application.chairman.additional_info_value}} <br>
 				Chairman of ECE <br>
 				North South University
 			</div>
@@ -121,5 +126,9 @@ form{
 	</div>
 
 
-	<button type="button" class="btn btn-info" ng-click="togglePrintShow()">Print Preview</button>
+	<button type="button" class="btn btn-info print-hide" ng-click="togglePrintShow()">Edit</button>&nbsp;
+	<button type="button" class="btn btn-success print-hide" ng-click="saveApplication()" ng-click="">Save</button>&nbsp;
+	<button type="button" class="btn btn-success print-hide" ng-click="print()">Print</button>&nbsp;
+	<button type="button" class="btn btn-success print-hide" ng-click="saveNPrint()">Save & Print</button>&nbsp;
+
 </div>
