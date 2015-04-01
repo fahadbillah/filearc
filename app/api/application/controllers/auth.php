@@ -162,18 +162,19 @@ class Auth extends CI_Controller {
 
 		$this->email_check($user_data['email']);
 		$this->academic_id_check($user_data['academic_id']);
+		// echo "wow";
 
 		if($this->User_model->add_user($user_data) === true){
-
+			// echo "wow";
 			$config = Array(
 			                'protocol' => 'smtp',
-			                'smtp_host' => 'smtp.tarifrr.info',
+			                'smtp_host' => 'mail.nsubusinessalumni.org',
 			                'smtp_port' => 26,
 			                'smtp_timeout' =>'7',
 			                'charset' => 'utf-8',
 			                'newline' => "\r\n",
-			                'smtp_user' => 'nsuprojects@tarifrr.info', 
-			                'smtp_pass' => 'Test1234', 
+			                'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+			                'smtp_pass' => '.@ZJRn~yo6TC', 
 			                'mailtype' => 'html',
 			                'validation' => TRUE,
 			                'wordwrap' => TRUE
@@ -181,13 +182,31 @@ class Auth extends CI_Controller {
 
 			$this->load->library('email',$config);
 
-			$this->email->from('no-reply@nsubusinessalumni.org', 'NO-REPLY');
+			$this->email->from('nsuprojects@tarifrr.info', 'NO-REPLY');
+
+			// $config = Array(
+			//                 'protocol' => 'smtp',
+			//                 'smtp_host' => 'smtp.tarifrr.info',
+			//                 'smtp_port' => 26,
+			//                 'smtp_timeout' =>'7',
+			//                 'charset' => 'utf-8',
+			//                 'newline' => "\r\n",
+			//                 'smtp_user' => 'nsuprojects@tarifrr.info', 
+			//                 'smtp_pass' => 'Test1234', 
+			//                 'mailtype' => 'html',
+			//                 'validation' => TRUE,
+			//                 'wordwrap' => TRUE
+			//                 );
+
+			// $this->load->library('email',$config);
+
+			// $this->email->from('nsuprojects@tarifrr.info', 'NO-REPLY');
 			// $this->email->cc('another@example.com');
 			// $this->email->bcc('and@another.com');
 
 
 
-			$this->email->to('fahadbillah@yahoo.com'); 
+			// $this->email->to('billah22@gmail.com'); 
 			$this->email->to($user_data['email']); 
 
 			$this->email->subject('Account activation!');
@@ -199,7 +218,7 @@ class Auth extends CI_Controller {
 
 			$this->email->message($message);
 
-			$this->email->send();
+			$result = $this->email->send();
 
 			// echo $this->email->print_debugger();
 			// exit();
@@ -215,7 +234,7 @@ class Auth extends CI_Controller {
 			                          'actionName' => 'redirect',
 			                          'url' => '/success/101'
 			                          ),
-			        'email' => $this->email->print_debugger()
+			        'email' => $result
 			        ));
 		}else{
 			jsonify(array(
@@ -224,7 +243,7 @@ class Auth extends CI_Controller {
 			                           'title' => 'Registration failed!', 
 			                           'body' => 'Please try again.', 
 			                           ),
-			        'email' => $this->email->print_debugger()
+			        'email' => $result
 			        ));
 		}
 
@@ -319,11 +338,60 @@ class Auth extends CI_Controller {
 
 	public function test()
 	{
-		$q = $this->db->query('DESCRIBE additional_infos;');
-		$result = $q->result();
-		
+		exit();
+		$config = Array(
+		                'protocol' => 'smtp',
+		                'smtp_host' => 'mail.nsubusinessalumni.org',
+		                'smtp_port' => 26,
+		                'smtp_timeout' =>'7',
+		                'charset' => 'utf-8',
+		                'newline' => "\r\n",
+		                'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+		                'smtp_pass' => '.@ZJRn~yo6TC', 
+		                'mailtype' => 'html',
+		                'validation' => TRUE,
+		                'wordwrap' => TRUE
+		                );
+
+		$this->load->library('email',$config);
+
+		$this->email->from('nsuprojects@tarifrr.info', 'NSU Business Alumni');
+
+		// $config = Array(
+		//                 'protocol' => 'smtp',
+		//                 'smtp_host' => 'smtp.tarifrr.info',
+		//                 'smtp_port' => 26,
+		//                 'smtp_timeout' =>'7',
+		//                 'charset' => 'utf-8',
+		//                 'newline' => "\r\n",
+		//                 'smtp_user' => 'nsuprojects@tarifrr.info', 
+		//                 'smtp_pass' => 'Test1234', 
+		//                 'mailtype' => 'html',
+		//                 'validation' => TRUE,
+		//                 'wordwrap' => TRUE
+		//                 );
+
+		// $this->load->library('email',$config);
+
+		// $this->email->from('nsuprojects@tarifrr.info', 'NO-REPLY');
+			// $this->email->cc('another@example.com');
+			// $this->email->bcc('and@another.com');
+
+
+
+		$this->email->to('fahadbillah@yahoo.com'); 
+
+		$this->email->subject('Account activation!');
+
+		$message = '';
+		$message .= 'Your registration was successfull. Please activate your account by clicking the link below. <br> <br>';
+		$message .= '';
+		// $message .= '<a href="http://tarifrr.info/filearc/#/activateuser/'.$user_data['activation_code'].'" title="">Activate</a> <br> <br>' ;
+
+		$this->email->message($message);
+
+		$result = $this->email->send();
 		echo "<pre>";
-		vd($result);
 		echo "</pre>";
 	}
 
