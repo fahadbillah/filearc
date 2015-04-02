@@ -201,4 +201,45 @@
 
  	};
 
+ 	$scope.toggleLF = true;
+ 	$scope.toggleLoginForget = function() {
+ 		$scope.toggleLF = $scope.toggleLF ? false : true;
+ 	}
+
+
+ 	$scope.forgetPassword = function() {
+ 		var forgetPass = {
+ 			'email': forgetPasswordForm.elements.email.value.trim(),
+ 		};
+
+ 		$http.post('api/index.php/auth/forget_password',forgetPass)
+ 		.success(function(data) {
+ 			console.log(data);
+ 			if (data.success === false) {
+ 				$scope.error.className = 'alert-danger';
+ 				$scope.error.title = data.message.title;
+ 				$scope.error.body = data.message.body;
+ 				setTimeout(function(){
+ 					$scope.error.className = 'hidden';
+ 					$scope.error.title = '';
+ 					$scope.error.body = '';
+ 				},2000);
+ 			}else{
+ 				$scope.error.className = 'alert-success';
+ 				$scope.error.title = data.message.title;
+ 				$scope.error.body = data.message.body;
+ 				setTimeout(function(){
+ 					$scope.error.className = 'hidden';
+ 					$scope.error.title = '';
+ 					$scope.error.body = '';
+ 				},2000);
+ 				$scope.toggleLF = true;
+ 			}
+ 		})
+ 		.error(function(data) {
+ 			console.log('http error occured!');
+ 			console.log(data);
+ 		});
+ 	}
+
  }]);

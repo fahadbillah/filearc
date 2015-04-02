@@ -426,6 +426,121 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	public function forget_password()
+	{
+		$user_data = get_post();
+
+		$data = $this->db->where('email', $user_data['email'])->get('users')->result_array()[0];
+		// vd($data);
+		// exit();
+		if (count($data) > 0) {
+			if ($data['access_status'] != 'activated') {
+
+				jsonify(array(
+				        'success' => false, 
+				        'message' => array(
+				                           'title' => 'Your account is not activated!',
+				                           'body' => 'Activate it first from your email.', 
+				                           )
+				        ));
+			}
+
+			$update = array(
+			                'activation_code' => $this->token(), 
+			                );
+			$this->db->where('id_users', $data['id_users']);
+			$this->db->update('users',$update);
+			// exit();
+
+			$config = Array(
+			                'protocol' => 'smtp',
+			                'smtp_host' => 'mail.nsubusinessalumni.org',
+			                'smtp_port' => 26,
+			                'smtp_timeout' =>'7',
+			                'charset' => 'utf-8',
+			                'newline' => "\r\n",
+			                'smtp_user' => 'no-reply@nsubusinessalumni.org', 
+			                'smtp_pass' => '.@ZJRn~yo6TC', 
+			                'mailtype' => 'html',
+			                'validation' => TRUE,
+			                'wordwrap' => TRUE
+			                );
+
+			$this->load->library('email',$config);
+
+			$this->email->from('nsuprojects@tarifrr.info', 'NO-REPLY');
+
+			// $this->email->to('fahadbillah@yahoo.com'); 
+			$this->email->to($data['email']); 
+
+			$this->email->subject('Change Password!');
+
+			$message = '';
+			$message .= 'Click the link and update your password <br> <br>';
+			$message .= '';
+			$message .= '<a href="tarifrr.info/filearc/#/updatepassword/'.$update['activation_code'].'" title="">Set New Password</a> <br> <br>' ;
+
+			$this->email->message($message);
+
+			$result = $this->email->send();
+		}
+		else{
+
+			jsonify(array(
+			        'success' => false, 
+			        'message' => array(
+			                           'title' => 'No user found for this email address',
+			                           'body' => '', 
+			                           )
+			        ));
+		}
+
+	}
+
+	public function update_password()
+	{
+		$data = get_post();
+		if(count($this->db->where('activation_code', $data['activation_code'])->get('users')->result_array())>0){
+
+
+
+
+			$update = array(
+			                'password' => sha1($data['password']), 
+			                'activation_code' => '', 
+			                );
+			$this->db->where('activation_code', $data['activation_code']);
+			if($this->db->update('users', $update)){
+
+				jsonify(array(
+				        'success' => true, 
+				        'message' => array(
+				                           'title' => 'Password Changed!',
+				                           'body' => 'Now login with new password.', 
+				                           )
+				        ));
+			}else{
+
+				jsonify(array(
+				        'success' => false, 
+				        'message' => array(
+				                           'title' => 'Password Changed failed!',
+				                           'body' => '', 
+				                           )
+				        ));
+			}
+		}else{
+
+			jsonify(array(
+			        'success' => false, 
+			        'message' => array(
+			                           'title' => 'Activation code not matched!',
+			                           'body' => '', 
+			                           )
+			        ));
+		}
+	}
+
 }
 
 /* End of file auth.php */

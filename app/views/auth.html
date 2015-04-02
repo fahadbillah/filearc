@@ -13,7 +13,7 @@
 </div>
 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-	<form>
+	<form ng-if="toggleLF">
 		<legend>Login</legend>
 
 		<div class="form-group">
@@ -26,9 +26,21 @@
 			<input type="password" class="form-control" ng-enter="login()" ng-model="form.pass" placeholder="********">
 		</div>
 
-		<button type="button" ng-click="login()" class="btn btn-primary">Login</button>
+		<button type="button" ng-click="login()" class="btn btn-primary">Login</button> &nbsp; <a href="" ng-click="toggleLoginForget()">Forget Password</a>
 	</form>
 	
+	<form ng-if="!toggleLF" name="forgetPasswordForm">
+		<legend>Forget Password</legend>
+
+		<div class="form-group">
+			<label for="">Email</label>
+			<input type="email" class="form-control" name="email" placeholder="example@gmail.com" required>
+			<span class="label label-danger" ng-if="forgetPasswordForm.email.$error.required && forgetPasswordForm.email.$dirty">Required</span>
+			<span class="label label-danger" ng-if="forgetPasswordForm.email.$error.email && forgetPasswordForm.email.$dirty">Invalid Email</span>
+		</div>
+
+		<button ng-click="forgetPassword()" ng-disabled="forgetPasswordForm.$invalid" type="button" class="btn btn-primary">Send</button> &nbsp; <a href="" ng-click="toggleLoginForget()">Login</a>
+	</form>
 </div>
 
 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

@@ -37,12 +37,12 @@
  				switch(currentUrl) {
  					case 'success':
  					case 'activateuser':
+ 					case 'updatePassword':
  					needRedirect = false;
  					break;
  					default:
  					needRedirect = true;
  				}
-
 
  				scope.logoLink = '';
  				$http.get('api/index.php/auth/is_logged_in')

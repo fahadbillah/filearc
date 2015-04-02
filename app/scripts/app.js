@@ -10,14 +10,14 @@
  */
  angular
  .module('ngApp', [
-  'ngAnimate',
-  'ngCookies',
-  'ngResource',
-  'ngRoute',
-  'ngSanitize',
-  'ngTouch',
-  'angularFileUpload'
-  ])
+         'ngAnimate',
+         'ngCookies',
+         'ngResource',
+         'ngRoute',
+         'ngSanitize',
+         'ngTouch',
+         'angularFileUpload'
+         ])
  .config(function ($routeProvider) {
   $routeProvider
   .when('/', {
@@ -75,6 +75,10 @@
   .when('/facultyApplication', {
     templateUrl: 'views/facultyapplication.html',
     controller: 'FacultyapplicationCtrl'
+  })
+  .when('/updatePassword/:activationCode', {
+    templateUrl: 'views/updatepassword.html',
+    controller: 'UpdatepasswordCtrl'
   })
   .otherwise({
     redirectTo: '/auth'
