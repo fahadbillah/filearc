@@ -49,5 +49,38 @@
 			<th>File uploaded:</th>
 			<th>{{count}}</th>
 		</tr>
+		<tr>
+			<th></th>
+			<th>
+				<form ng-show="changePasswordShow" ng-submit="changePassword()" name="changePasswordForm">
+					<div class="form-group">
+						<div class="alert {{alerm.className}}" ng-show="alerm.show">
+							<strong>{{alerm.title}}</strong>  {{alerm.body}}
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Old Password</label>
+						<input type="password" name="oldp" ng-model="changePass.oldPassword" class="form-control" required />
+						<span class="label label-danger pull-left" ng-if="changePasswordForm.oldp.$invalid && changePasswordForm.oldp.$dirty">Required</span>
+					</div>
+					<div class="form-group">
+						<label>New Password</label>
+						<input type="password" name="newp" ng-model="changePass.newPassword" class="form-control" required />
+						<span class="label label-danger pull-left" ng-if="changePasswordForm.newp.$invalid && changePasswordForm.newp.$dirty">Required</span>
+					</div>
+					<div class="form-group">
+						<label>Repeat Password</label>
+						<input type="password" name="rep" ng-model="changePass.rePassword" class="form-control" required />
+						<span class="label label-danger pull-left" ng-if="changePasswordForm.rep.$invalid && changePasswordForm.rep.$dirty" style="margin-right:5px;">Required</span>
+						<span class="label label-danger pull-left" ng-if="changePass.newPassword != changePass.rePassword && changePasswordForm.rep.$dirty">Mismatch</span>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary" ng-disabled="changePasswordForm.$invalid || changePasswordForm.$pristine || changePass.newPassword != changePass.rePassword">Change</button>
+						<button type="button" class="btn btn-default" ng-click="changePasswordShow =! changePasswordShow">Cancel</button>
+					</div>
+				</form>
+				<button type="button" class="btn btn-info btn-xs" ng-show="!changePasswordShow" ng-click="changePasswordShow =! changePasswordShow">Change Password</button>
+			</th>
+		</tr>
 	</tbody>
 </table>

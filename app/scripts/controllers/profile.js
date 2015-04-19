@@ -8,7 +8,7 @@
  * Controller of the ngApp
  */
  angular.module('ngApp')
- .controller('ProfileCtrl', ['$scope','$http','$route','FileUploader', function ($scope,$http,$route,FileUploader) {
+ .controller('ProfileCtrl', ['$scope','$http','$route','$timeout','FileUploader', function ($scope,$http,$route,$timeout,FileUploader) {
  	$scope.awesomeThings = [
  	'HTML5 Boilerplate',
  	'AngularJS',
@@ -128,5 +128,42 @@ $scope.thumbnail = function(url) {
 	else
 		return url;
 }
+
+$scope.changePass = {
+	oldPassword: '',
+	newPassword: '',
+	rePassword: ''
+};
+
+$scope.alerm = {
+	show: false,
+	className: '',
+	title: '',
+	body: ''
+}
+
+$scope.changePassword = function() {
+	$http.post('api/index.php/auth/change_password',$scope.changePass)
+	.success(function(data) {
+		$scope.alerm.show = true;
+		$scope.alerm.className = data.success ? 'alert-success' : 'alert-danger';
+		$scope.alerm.title = data.message.title;
+		$scope.alerm.body = data.message.body;
+		$timeout(function() {
+			$scope.alerm.show = false;
+		},3000);
+		console.log(data);
+	})
+	.error(function(data,error) {
+		$scope.alerm.show = true;
+		$scope.alerm.className = 'alert-danger';
+		$scope.alerm.title = data.message.title;
+		$scope.alerm.body = data.message.body;
+		$timeout(function() {
+			$scope.alerm.show = false;
+		},3000);
+		console.log(data);
+	})
+};
 
 }]);

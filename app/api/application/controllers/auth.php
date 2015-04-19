@@ -541,6 +541,74 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	public function change_password()
+	{
+		$data = get_post();
+		// vd($data);
+		// vd($this->session->all_userdata());
+		// $this->session->userdata('logged_in');
+		// exit();
+
+		if($this->session->userdata('logged_in') === true){
+			if ($data['newPassword'] !== $data['rePassword']) {
+				jsonify(array(
+				        'success' => false, 
+				        'message' => array(
+				                           'title' => 'Password Mismatch!',
+				                           'body' => '', 
+				                           )
+				        ));
+			}
+
+			$this->db->select('*');
+			$this->db->from('users');
+			$this->db->where('id_users', $this->session->userdata('id_users'));
+			$user_data = $this->db->get()->result_array();
+			if (count($user_data) == 0 || $user_data[0]['password'] != sha1($data['oldPassword'])) {
+				jsonify(array(
+				        'success' => false, 
+				        'message' => array(
+				                           'title' => 'Password not matched!',
+				                           'body' => '', 
+				                           )
+				        ));
+			}
+
+			$update = array(
+			                'password' => sha1($data['newPassword']), 
+			                );
+			$this->db->where('id_users', $this->session->userdata('id_users'));
+			if($this->db->update('users', $update)){
+
+				jsonify(array(
+				        'success' => true, 
+				        'message' => array(
+				                           'title' => 'Password Changed!',
+				                           'body' => 'Now login with new password.', 
+				                           )
+				        ));
+			}else{
+
+				jsonify(array(
+				        'success' => false, 
+				        'message' => array(
+				                           'title' => 'Password Changed failed!',
+				                           'body' => '', 
+				                           )
+				        ));
+			}
+		}else{
+
+			jsonify(array(
+			        'success' => false, 
+			        'message' => array(
+			                           'title' => 'You are not logged in!',
+			                           'body' => 'Please login to change password.', 
+			                           )
+			        ));
+		}
+	}
+
 }
 
 /* End of file auth.php */
