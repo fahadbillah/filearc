@@ -137,6 +137,14 @@ class User_model extends CI_Model {
 
 	}
 
+	public function get_all_passed_students()
+	{
+		$this->db->select('*');
+		$this->db->from('additional_infos');
+		$this->db->like('additional_info_name', 'application' , 'after');
+		return $this->db->get()->result_array();
+	}
+
 }
 
 /* End of file user_model.php */

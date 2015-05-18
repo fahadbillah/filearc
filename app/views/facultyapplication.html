@@ -40,7 +40,7 @@ form{
 	</div>
 
 	<div class="form-group">
-		<label for="">Applicaiton</label>
+		<label for="">Application</label>
 		<textarea class="form-control" rows="20" name="application" ng-model="application.application"></textarea>
 		<span class="label label-danger" ng-if="applicationForm.application.$error.required && applicationForm.application.$dirty">Required</span>
 	</div>
@@ -95,7 +95,7 @@ form{
 			<br>
 			<br>
 			<br>
-			<h4>Project Completion Acknowledgement</h4><br>
+			<h4>Project Completion Acknowledgment</h4><br>
 			<br>
 			<br>
 			<br>
@@ -105,7 +105,7 @@ form{
 			</p>
 			<br>
 			<br>
-			<p>The Student also submitted the report along with all necessary materials to the respective faculty.</p>
+			<p style="text-align: justify;padding: 0px 33px;">The Student also submitted the report along with all necessary materials to the respective faculty.</p>
 			<br>
 			<br>
 			<br>
@@ -126,9 +126,36 @@ form{
 	</div>
 
 
-	<button type="button" class="btn btn-info print-hide" ng-click="togglePrintShow()">Edit</button>&nbsp;
-	<button type="button" class="btn btn-success print-hide" ng-click="saveApplication()" ng-click="">Save</button>&nbsp;
+	<a href="#/facultyApplication" ng-if="!!studentID"><button type="button" class="btn btn-info print-hide">Back</button></a>&nbsp;
+	<button type="button" class="btn btn-info print-hide" ng-if="!studentID" ng-click="togglePrintShow()">Edit</button>&nbsp;
+	<button type="button" class="btn btn-success print-hide" ng-if="!studentID" ng-click="saveApplication()">Save</button>&nbsp;
 	<button type="button" class="btn btn-success print-hide" ng-click="print()">Print</button>&nbsp;
-	<button type="button" class="btn btn-success print-hide" ng-click="saveNPrint()">Save & Print</button>&nbsp;
+	<button type="button" class="btn btn-success print-hide" ng-if="!studentID" ng-click="saveNPrint()">Save & Print</button>&nbsp;
 
+</div>
+<br class="row print-hide">
+<div class="row print-hide">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<table class="table table-striped table-hover table-bordered">
+			<legend><input type="text" class="form-control" ng-model="search" placeholder="Seach Student" /></legend>
+			<thead>
+				<tr>
+					<th>Student Name</th>
+					<th>Student ID</th>
+					<th>Semester</th>
+					<th>Subject</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(key, value) in AllPassedStudents | filter:search">
+					<td>{{value.additional_info_value.student.first_name}} {{value.additional_info_value.student.last_name}}</td>
+					<td>{{value.additional_info_value.student.academic_id}}</td>
+					<td>{{value.additional_info_value.semester}}</td>
+					<td>{{value.additional_info_value.application}}</td>
+					<th><a href="#/facultyApplication/{{value.additional_info_value.student.academic_id}}"><button type="button" class="btn btn-info">Details</button></a></th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

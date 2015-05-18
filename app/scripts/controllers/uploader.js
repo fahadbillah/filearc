@@ -31,17 +31,17 @@
 $scope.baseUrl = window.location.origin+window.location.pathname;
 
 $scope.file = {
-   'title': '',
-   'details': '',
+ 'title': '',
+ 'details': '',
 };
 
 $scope.progressBarShow = false;
 
 var uploader = $scope.uploader = new FileUploader({
-   url: 'api/index.php/file/do_upload',
-   alias: 'upload',
-   formData: {
-    'data':'',
+ url: 'api/index.php/file/do_upload',
+ alias: 'upload',
+ formData: {
+  'data':'',
 }
 });
 
@@ -73,43 +73,43 @@ var uploader = $scope.uploader = new FileUploader({
 
 
             $scope.file = {
-                'title': $scope.file.title.trim(),
-                'details': $scope.file.details.trim(),
+              'title': $scope.file.title.trim(),
+              'details': $scope.file.details.trim(),
             };
 
             if ($scope.file.title == '' || $scope.file.details == ''){
-                alert("Empty field. Please fill properly");
-                return false;
+              alert("Empty field. Please fill properly");
+              return false;
             }
             $scope.uploader.formData.data = item.formData.data = JSON.stringify({
               'title': $scope.file.title,
               'details': $scope.file.details,
               'tags': $scope.tags
-          });
+            });
             $scope.progressBarShow = true;
             console.info('onBeforeUploadItem', item);
-        };
-        uploader.onProgressItem = function(fileItem, progress) {
+          };
+          uploader.onProgressItem = function(fileItem, progress) {
            console.info('onProgressItem', fileItem, progress);
            console.log(progress);
-       };
-       uploader.onProgressAll = function(progress) {
+         };
+         uploader.onProgressAll = function(progress) {
            console.info('onProgressAll', progress);
-       };
-       uploader.onSuccessItem = function(fileItem, response, status, headers) {
+         };
+         uploader.onSuccessItem = function(fileItem, response, status, headers) {
            console.log(response);
            console.info('onSuccessItem', fileItem, response, status, headers);
-       };
-       uploader.onErrorItem = function(fileItem, response, status, headers) {
+         };
+         uploader.onErrorItem = function(fileItem, response, status, headers) {
            console.info('onErrorItem', fileItem, response, status, headers);
-       };
-       uploader.onCancelItem = function(fileItem, response, status, headers) {
+         };
+         uploader.onCancelItem = function(fileItem, response, status, headers) {
            console.info('onCancelItem', fileItem, response, status, headers);
-       };
-       uploader.onCompleteItem = function(fileItem, response, status, headers) {
+         };
+         uploader.onCompleteItem = function(fileItem, response, status, headers) {
            console.info('onCompleteItem', fileItem, response, status, headers);
-       };
-       uploader.onCompleteAll = function() {
+         };
+         uploader.onCompleteAll = function(fileItem, response, status, headers) {
            console.info('onCompleteAll');
            $scope.file.title = '';
            $scope.file.details = '';
@@ -120,9 +120,9 @@ var uploader = $scope.uploader = new FileUploader({
            $scope.progressBarShow = false;
 
             // getMyFiles();
-        };
+          };
 
-        console.info('uploader', uploader);
+          console.info('uploader', uploader);
 
         // $scope.categories = [];
 
@@ -150,7 +150,7 @@ var getMyFiles = function() {
   console.log(data.data);
   if (data.success === true) {
    $scope.files = data.data;
-}
+ }
 })
  .error(function(data) {
   console.log(data);
@@ -163,13 +163,13 @@ $scope.tag = '';
 $scope.tags = [];
 
 $scope.addTag = function() {
-    $scope.tag = $scope.tag.trim();
-    if ($scope.tag === '')
-        return false;
-    var aTag = checkIfTagExists($scope.tag);
-    $scope.tags.push(aTag);
-    $scope.tag = '';
-    console.log($scope.tags);
+  $scope.tag = $scope.tag.trim();
+  if ($scope.tag === '')
+    return false;
+  var aTag = checkIfTagExists($scope.tag);
+  $scope.tags.push(aTag);
+  $scope.tag = '';
+  console.log($scope.tags);
 };
 
 
@@ -179,7 +179,7 @@ var checkIfTagExists = function(t) {
   if (angular.lowercase(elm.tag_name) === angular.lowercase(t) ) {
    aTag = elm;
    return false;
-}
+ }
 });
 
  if (aTag.hasOwnProperty('id_tags')) {
@@ -188,48 +188,48 @@ var checkIfTagExists = function(t) {
   return {
    id_tags: null,
    tag_name: t
-};
+ };
 }
 };
 
 $scope.allTags = [];
 
 var getAllTags = function() {
-    $http.get('api/index.php/file/get_all_tags')
-    .success(function(data){
-        if(data.success === true){
-            $scope.allTags = data.data;
-        }
-        console.log($scope.allTags);
-    })
-    .error(function(data) {
-        console.log(data);
-    });
+  $http.get('api/index.php/file/get_all_tags')
+  .success(function(data){
+    if(data.success === true){
+      $scope.allTags = data.data;
+    }
+    console.log($scope.allTags);
+  })
+  .error(function(data) {
+    console.log(data);
+  });
 };
 
 getAllTags();
 
 $scope.deleteFile = function(id) {
-    $http.get('api/index.php/file/delete_file/'+id)
-    .success(function(data){
-        if(data.success === true){
-            getMyFiles();
-        }
-    })
-    .error(function(data) {
-        console.log(data);
-    });
+  $http.get('api/index.php/file/delete_file/'+id)
+  .success(function(data){
+    if(data.success === true){
+      getMyFiles();
+    }
+  })
+  .error(function(data) {
+    console.log(data);
+  });
 };
 
 
 $scope.createFileName = function(file) {
-    var ext = file.file_url.split('/');
-    ext = ext[ext.length-1];
-    return ext;
+  var ext = file.file_url.split('/');
+  ext = ext[ext.length-1];
+  return ext;
 };
 
 
 $scope.goToDetails = function(fileId) {
-    $location.path('filedetails/' + fileId);
+  $location.path('filedetails/' + fileId);
 }
 }]);

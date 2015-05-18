@@ -49,17 +49,17 @@ class File_model extends CI_Model {
 
 			if ($value['id_tags'] == null) {
 				$this->db->insert('tags', array(
-					'tag_name' => $value['tag_name']
-					));
+				                  'tag_name' => $value['tag_name']
+				                  ));
 				$tag_id = $this->db->insert_id();
 			}else{
 				$tag_id = $value['id_tags'];
 			}
 
 			$this->db->insert('file_tags', array(
-				'id_files' => $file_id, 
-				'id_tags' => $tag_id, 
-				));
+			                  'id_files' => $file_id, 
+			                  'id_tags' => $tag_id, 
+			                  ));
 		}
 
 		if ($this->db->trans_status() === FALSE)
@@ -93,18 +93,18 @@ class File_model extends CI_Model {
 	public function get_files($options)
 	{
 		$this->db->select('
-			files.id_files,
-			files.file_title,
-			files.file_url,
-			files.file_details,
-			files.file_added,
-			users.id_users,
-			users.user_type,
-			users.first_name,
-			users.last_name,
-			user_likes.id_users likes,
-			user_archives.id_users favorites
-			');
+		                  files.id_files,
+		                  files.file_title,
+		                  files.file_url,
+		                  files.file_details,
+		                  files.file_added,
+		                  users.id_users,
+		                  users.user_type,
+		                  users.first_name,
+		                  users.last_name,
+		                  user_likes.id_users likes,
+		                  user_archives.id_users favorites
+		                  ');
 
 		/*
 		,
@@ -141,18 +141,18 @@ class File_model extends CI_Model {
 		public function get_file_details($id_files)
 		{
 			$this->db->select('
-				files.id_files,
-				files.file_title,
-				files.file_url,
-				files.file_details,
-				files.file_added,
-				users.id_users,
-				users.first_name,
-				users.last_name,
-				file_tags.id_files,
-				file_tags.id_tags,
-				tags.tag_name,
-				');
+			                  files.id_files,
+			                  files.file_title,
+			                  files.file_url,
+			                  files.file_details,
+			                  files.file_added,
+			                  users.id_users,
+			                  users.first_name,
+			                  users.last_name,
+			                  file_tags.id_files,
+			                  file_tags.id_tags,
+			                  tags.tag_name,
+			                  ');
 			/*
 				files.file_category,
 				categories.category_name,
@@ -185,13 +185,13 @@ class File_model extends CI_Model {
 			public function get_user_info($id_users)
 			{
 				$this->db->select('
-					id_users,
-					first_name,
-					last_name,
-					email,
-					profile_picture,
-					academic_id
-					');
+				                  id_users,
+				                  first_name,
+				                  last_name,
+				                  email,
+				                  profile_picture,
+				                  academic_id
+				                  ');
 				$this->db->from('users');
 				$this->db->where('id_users', $id_users);
 				$q = $this->db->get();
@@ -229,16 +229,16 @@ class File_model extends CI_Model {
 				{
 					$this->db->trans_rollback();
 					return array(
-						'success' => false, 
-						);
+					             'success' => false, 
+					             );
 				}
 				else
 				{
 					$this->db->trans_commit();
 					return array(
-						'success' => true, 
-						'add' => $add, 
-						);
+					             'success' => true, 
+					             'add' => $add, 
+					             );
 				}
 			}
 
@@ -267,16 +267,16 @@ class File_model extends CI_Model {
 				{
 					$this->db->trans_rollback();
 					return array(
-						'success' => false, 
-						);
+					             'success' => false, 
+					             );
 				}
 				else
 				{
 					$this->db->trans_commit();
 					return array(
-						'success' => true, 
-						'add' => $add, 
-						);
+					             'success' => true, 
+					             'add' => $add, 
+					             );
 				}
 			}
 
@@ -338,6 +338,28 @@ class File_model extends CI_Model {
 				$this->db->where('id_users', $id_users);
 				$this->db->where('id_files', $id_files);
 				return $this->db->delete('files');
+			}
+
+
+			public function comment_submit($comment)
+			{
+				return $this->db->insert('comments', $comment);
+			}
+
+			public function get_all_comments($id_files)
+			{
+				$this->db->select('
+				                  users.id_users,
+				                  users.first_name,
+				                  users.last_name,
+				                  comments.comment,
+				                  comments.date_created,
+				                  ');
+				$this->db->from('comments');
+				$this->db->join('users', 'users.id_users = comments.id_users');
+				$this->db->where('comments.id_files', $id_files);
+				$this->db->order_by('comments.id_comments', 'asc');
+				return $this->db->get()->result_array();
 			}
 
 		}

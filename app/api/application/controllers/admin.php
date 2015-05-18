@@ -155,7 +155,7 @@ class Admin extends CI_Controller {
 
 		$student = array(
 		                 'additional_info_name' => $additional_info_name,
-		                 'additional_info_value' => serialize($rcv),
+		                 'additional_info_value' => base64_encode(serialize($rcv)),
 		                 );
 		$result = $this->user_model->insert_student_completion_certificate($student);
 
@@ -173,6 +173,26 @@ class Admin extends CI_Controller {
 		echo "<pre>";
 		pr($this->user_model->get_all_additional_info());
 		echo "</pre>";
+	}
+
+	public function get_all_passed_students()
+	{
+		$data = $this->user_model->get_all_passed_students();
+		foreach ($data as $key => $value) {
+			$data[$key]['additional_info_value'] = unserialize(base64_decode($value['additional_info_value']));
+		}
+		$filteredData = array();
+		foreach ($data as $key => $value) {
+			if ($value['additional_info_value']['facultyID'] == $this->session->userdata('academic_id')) {
+				array_push($filteredData, $value);
+			}
+		}
+
+		$result = array(
+		                'success' => true,
+		                'data' => $filteredData,
+		                );
+		jsonify($result);
 	}
 
 }

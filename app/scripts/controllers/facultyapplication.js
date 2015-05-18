@@ -8,7 +8,7 @@
  * Controller of the ngApp
  */
  angular.module('ngApp')
- .controller('FacultyapplicationCtrl',['$scope','$http', function ($scope,$http) {
+ .controller('FacultyapplicationCtrl',['$scope','$http','$routeParams','$location', function ($scope,$http,$routeParams,$location) {
  	$scope.awesomeThings = [
  	'HTML5 Boilerplate',
  	'AngularJS',
@@ -20,6 +20,7 @@
  		application: '',
  		student: {},
  		faculty: '',
+ 		facultyID: '',
  		chairman: '',
  		semester: '',
  		course: '',
@@ -31,6 +32,7 @@
  		$http.get('api/index.php/file/get_my_profile_info')
  		.success(function(data) {
  			$scope.application.faculty = data.info[0].first_name+' '+data.info[0].last_name;
+ 			$scope.application.facultyID = data.info[0].academic_id;
  			console.log(data);
  		})
  		.error(function(data) {
@@ -61,16 +63,10 @@
  		.success(function(data) {
  			if(data.success === true){
  				$scope.allAdditionalInfo = data.data;
-
-
- 				// angular.forEach(data.data, function(e,i) {
- 				// 	console.log(e);
- 				// 	application.chairman = '';
- 				// })
- 	}else{
- 	}
- 	console.log(data);
- })
+ 			}else{
+ 			}
+ 			console.log(data);
+ 		})
  		.error(function(data) {
  			console.log(data);
  		});
@@ -167,6 +163,7 @@
  		$http.post('api/index.php/admin/student_completion_certificate',$scope.application)
  		.success(function(data) {
  			console.log(data);
+ 			$scope.getAllPassedStudents();
  			// if (data.success === false) {
  			// }else{
  			// }
@@ -186,5 +183,44 @@
  		$scope.saveApplication();
  		$scope.print();
  	}
+
+ 	$scope.AllPassedStudents;
+
+ 	$scope.studentID = $routeParams.studentID;
+
+
+ 	var studentFound = false;
+ 	$scope.getAllPassedStudents = function() {
+ 		$http.get('api/index.php/admin/get_all_passed_students')
+ 		.success(function(data) {
+ 			if(data.success === true){
+ 				$scope.AllPassedStudents = data.data;
+
+ 				if($routeParams.studentID){
+ 					angular.forEach($scope.AllPassedStudents, function(e,i) {
+ 						if ($routeParams.studentID == e.additional_info_value.student.academic_id) {
+ 							console.log(e.additional_info_value.student.academic_id);
+ 							$scope.application = e.additional_info_value;
+ 							$scope.showPrint = false;
+ 							studentFound = true;
+ 						} else{
+
+ 						};
+ 					});
+
+ 					if (!studentFound) {
+ 						$location.path('/facultyApplication');
+ 					};
+ 				}
+ 			}else{
+ 			}
+ 			console.log($scope.AllPassedStudents);
+ 		})
+ 		.error(function(data) {
+ 			console.log(data);
+ 		});
+ 	}
+
+ 	$scope.getAllPassedStudents();
 
  }]);

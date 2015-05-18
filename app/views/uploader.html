@@ -24,7 +24,7 @@ File Details:
 
 
 <form class="">
-	<legend>Form title</legend>
+	<legend>Upload Files</legend>
 
 	<div class="form-group">
 		<label for="">File Title *</label>
@@ -52,7 +52,7 @@ File Details:
 			<input class="form-control" ng-model="tag" ng-enter="addTag()" placeholder="Write tag name and then enter">
 		</div>
 		<div>
-			<button class="btn btn-success" ng-repeat="(key, value) in tags">{{value.tag_name}}</button>
+			<button class="btn btn-success" ng-repeat-start="(key, value) in tags">{{value.tag_name}}</button><span ng-repeat-end>&nbsp;</span>
 		</div>
 	</div>
 
@@ -87,7 +87,7 @@ File Details:
 			<th>ID</th>
 			<th>File title</th>
 			<th>File link</th>
-			<th>Date details</th>
+			<th>File details</th>
 			<th>Delete</th>
 			<th>Date uploaded</th>
 		</tr>

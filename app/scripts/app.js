@@ -76,6 +76,10 @@
     templateUrl: 'views/facultyapplication.html',
     controller: 'FacultyapplicationCtrl'
   })
+  .when('/facultyApplication/:studentID', {
+    templateUrl: 'views/facultyapplication.html',
+    controller: 'FacultyapplicationCtrl'
+  })
   .when('/updatePassword/:activationCode', {
     templateUrl: 'views/updatepassword.html',
     controller: 'UpdatepasswordCtrl'

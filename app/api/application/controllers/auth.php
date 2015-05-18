@@ -214,7 +214,7 @@ class Auth extends CI_Controller {
 			$message = '';
 			$message .= 'Your registration was successfull. Please activate your account by clicking the link below. <br> <br>';
 			$message .= '';
-			$message .= '<a href="http://tarifrr.info/filearc/#/activateuser/'.$user_data['activation_code'].'" title="">Activate</a> <br> <br>' ;
+			$message .= '<a href="http://filearc.fahadbillah.com/#/activateuser/'.$user_data['activation_code'].'" title="">Activate</a> <br> <br>';
 
 			$this->email->message($message);
 
@@ -404,7 +404,7 @@ class Auth extends CI_Controller {
 		if (count($result) > 0) {
 			$new_activation_code = array(
 			                             'activation_code' => '',
-			                             'access_status' => 'account_activated'
+			                             'access_status' => 'activated'
 			                             );
 			$this->User_model->update_activation_code($new_activation_code,$result[0]['id_users']);
 
@@ -478,7 +478,7 @@ class Auth extends CI_Controller {
 			$message = '';
 			$message .= 'Click the link and update your password <br> <br>';
 			$message .= '';
-			$message .= '<a href="tarifrr.info/filearc/#/updatepassword/'.$update['activation_code'].'" title="">Set New Password</a> <br> <br>' ;
+			$message .= '<a href="http://filearc.fahadbillah.com/#/updatePassword/'.$update['activation_code'].'" title="">Set New Password</a> <br> <br>' ;
 
 			$this->email->message($message);
 

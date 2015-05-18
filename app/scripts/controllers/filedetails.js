@@ -8,7 +8,7 @@
  * Controller of the ngApp
  */
  angular.module('ngApp')
- .controller('FiledetailsCtrl', ['$scope', '$http', '$routeParams', function ($scope,$http,$routeParams) {
+ .controller('FiledetailsCtrl', ['$scope', '$http', '$routeParams', '$timeout', function ($scope,$http,$routeParams,$timeout) {
  	$scope.awesomeThings = [
  	'HTML5 Boilerplate',
  	'AngularJS',
@@ -66,5 +66,56 @@
  			console.log(data);
  		});
  	}
+ 	$scope.alerm = {
+ 		show: false,
+ 		className: '',
+ 		title: '',
+ 		body: ''
+ 	}
+ 	$scope.allComments = [];
+
+ 	$scope.getAllComments = function() {
+ 		$http.get('api/index.php/file/get_all_comments/'+$routeParams.fileId)
+ 		.success(function(data) {
+ 			$scope.allComments = data;
+ 		})
+ 		.error(function(data,error) {
+ 			alert('Please login first!');
+ 		})
+ 	};
+
+ 	$scope.getAllComments();
+
+ 	$scope.submitComment = function(comment) {
+ 		var postData = {
+ 			'comment': comment,
+ 			'id_files': $routeParams.fileId
+ 		};
+ 		$http.post('api/index.php/file/comment_submit',postData)
+ 		.success(function(data) {
+ 			$scope.comment = '';
+ 			$scope.getAllComments();
+ 			$scope.alerm.show = true;
+ 			$scope.alerm.className = data.success ? 'alert-success' : 'alert-danger';
+ 			$scope.alerm.title = data.message.title;
+ 			$scope.alerm.body = data.message.body;
+ 			$timeout(function() {
+ 				$scope.alerm.show = false;
+ 			},3000);
+ 			console.log(data);
+ 		})
+ 		.error(function(data,error) {
+ 			console.log(data);
+ 			return false;
+ 			$scope.alerm.show = true;
+ 			$scope.alerm.className = 'alert-danger';
+ 			$scope.alerm.title = data.message.title;
+ 			$scope.alerm.body = data.message.body;
+ 			$timeout(function() {
+ 				$scope.alerm.show = false;
+ 			},3000);
+ 			console.log(data);
+ 		})
+ 	};
 
  }]);
