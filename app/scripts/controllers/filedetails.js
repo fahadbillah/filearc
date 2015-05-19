@@ -80,7 +80,7 @@
  			$scope.allComments = data;
  		})
  		.error(function(data,error) {
- 			alert('Please login first!');
+ 			console.log('No comment found!');
  		})
  	};
 

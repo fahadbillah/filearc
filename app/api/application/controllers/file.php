@@ -439,30 +439,7 @@ class File extends CI_Controller {
 	public function comment_submit()
 	{
 		if (!$this->db->table_exists('comments')) {
-			$this->load->dbforge();
-
-			$fields = array('id_comments' => array(
-			                'type' => 'INT',
-			                'constraint' => 5, 
-			                'unsigned' => TRUE,
-			                'auto_increment' => TRUE
-			                ),
-			'comment' => array(
-			                   'type' => 'TEXT',
-			                   ),
-			'id_users' => array(
-			                    'type' =>'INT',
-			                    ),
-			'id_files' => array(
-			                    'type' =>'INT',
-			                    ),
-			'date_created' => array(
-			                        'type' => 'TIMESTAMP',
-			                        ),
-			);
-			$this->dbforge->add_field($fields);
-			$this->dbforge->add_key('id_comments', TRUE);
-			$this->dbforge->create_table('comments', TRUE);
+			$this->create_comment_table();
 		}
 
 		$data = get_post();
@@ -481,6 +458,34 @@ class File extends CI_Controller {
 		                       );
 		jsonify($returned_data);
 
+	}
+
+	public function create_comment_table()
+	{
+		$this->load->dbforge();
+
+		$fields = array('id_comments' => array(
+		                'type' => 'INT',
+		                'constraint' => 5, 
+		                'unsigned' => TRUE,
+		                'auto_increment' => TRUE
+		                ),
+		'comment' => array(
+		                   'type' => 'TEXT',
+		                   ),
+		'id_users' => array(
+		                    'type' =>'INT',
+		                    ),
+		'id_files' => array(
+		                    'type' =>'INT',
+		                    ),
+		'date_created' => array(
+		                        'type' => 'TIMESTAMP',
+		                        ),
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id_comments', TRUE);
+		$this->dbforge->create_table('comments', TRUE);
 	}
 
 	public function test()
